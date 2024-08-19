@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
+
+
     @Override
     public User createUser(UserDTO userDTO) {
         if (isUserExistByEmail(userDTO.getEmail())) {
@@ -41,9 +43,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-
-
-            return user;
+        return user;
     }
 
     @Override
@@ -53,10 +53,11 @@ public class UserServiceImpl implements UserService {
             throw new CustomException("User not found.");
         }
 
-        User user = userOptional.get();
-        user.setUsername(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
+        User user = new User();
         user.setUsername(userDTO.getUsername());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setRole(Role.ROLE_USER);
@@ -76,8 +77,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+    public Optional<User> getUserById(Long userId) throws  Exception {
+        return  userRepository.findById(userId);
     }
 
     @Override
@@ -86,14 +87,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email));
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
-    User findUserByJwtToken(String token) {
-        String email = jwtProvider
-        return null;
+    public User findUserbyJwtToken(String token) {
+        String email = jwtProvider.getEmailFromJwtToken(token);
+
+        return userRepository.findByEmail(email);
     }
 
     @Override

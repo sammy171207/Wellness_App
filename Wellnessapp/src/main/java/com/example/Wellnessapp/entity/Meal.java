@@ -1,5 +1,6 @@
 package com.example.Wellnessapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,18 +33,14 @@ public class Meal {
 
     private int calories;
 
-
     private double protein;
 
-    @Column(nullable = false)
     private double carbs;
 
-    @Column(nullable = false)
     private double fats;
 
-    @Column(nullable = false)
     private LocalDateTime mealTime;
-
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

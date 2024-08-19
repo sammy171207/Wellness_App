@@ -76,7 +76,7 @@ public class AuthController {
         String jwt = jwtProvider.generateToken(authentication);
 
         // Retrieve the user from the database
-        User user = userService.getUserByEmail(loginRequest.getEmail()).get();
+        User user = userService.getUserByEmail(loginRequest.getEmail());
        
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);

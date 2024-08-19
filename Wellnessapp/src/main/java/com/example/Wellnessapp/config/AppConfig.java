@@ -25,7 +25,7 @@ public class AppConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(manage -> manage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(Authorize -> Authorize.requestMatchers("api/admin/**").hasRole("ADMIN")
+                .authorizeHttpRequests(Authorize -> Authorize.requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").authenticated()
                         .anyRequest().permitAll()).addFilterBefore( new TokenValidator(), BasicAuthenticationFilter.class).csrf(csrf -> csrf.disable()).cors(cors -> cors.configurationSource(corsConfigration()));
         return http.build();

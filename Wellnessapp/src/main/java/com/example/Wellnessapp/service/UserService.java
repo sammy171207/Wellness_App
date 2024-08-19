@@ -10,9 +10,11 @@ public interface UserService {
     User createUser(UserDTO userDTO);
     User updateUser(Long userId, UserDTO userDTO);
     void deleteUser(Long userId);
-    Optional<User> getUserById(Long userId);
+    Optional<User> getUserById(Long userId) throws  Exception;
     List<User> getAllUsers();
-    Optional<User> getUserByEmail(String email);
-    User findUserByJwtToken(String token);
+    User getUserByEmail(String email);
+
     boolean isUserExistByEmail(String email);
+
+    User findUserbyJwtToken(String jwt);
 }

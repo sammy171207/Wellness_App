@@ -30,7 +30,7 @@ public class JwtProvider {
         return jwt;
     }
 
-    private String getEmailFromJwtToken(String jwt) {
+    public String getEmailFromJwtToken(String jwt) {
         jwt = jwt.substring(7);
         Claims claims = Jwts.parser()
                 .setSigningKey(key)
@@ -40,6 +40,14 @@ public class JwtProvider {
         return String.valueOf(claims.get("email"));
     }
 
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return Long.valueOf(claims.get("userId").toString());
+    }
     private String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Set<String> auth = new HashSet<>();
         for (GrantedAuthority authority : authorities) {
